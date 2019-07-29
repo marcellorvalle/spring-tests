@@ -1,11 +1,12 @@
 package com.marcellorvalle.demo.SpecificationTools;
 
+import com.marcellorvalle.demo.data.specification.SpecificationBuilder;
 import com.marcellorvalle.demo.entities.Foo;
 
 import javax.persistence.criteria.Predicate;
 import java.util.List;
 
-public class FooFilter extends SingleClassSpecificationExecutor<Foo> {
+public class FooFilter extends SpecificationBuilder<Foo> {
 //    protected void initialize() {
 //        addFunction("name", this::filterByName);
 //    }
