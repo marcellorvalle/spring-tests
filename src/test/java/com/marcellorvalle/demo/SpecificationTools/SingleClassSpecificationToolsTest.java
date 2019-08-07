@@ -20,13 +20,12 @@ import java.util.Date;
 import java.util.List;
 
 public class SingleClassSpecificationToolsTest {
+    @SuppressWarnings("unchecked")
     private final Root<Foo> root = (Root<Foo>) Mockito.mock(Root.class);
     private final CriteriaQuery query = Mockito.mock(CriteriaQuery.class);
     private final CriteriaBuilder builder = Mockito.mock(CriteriaBuilder.class, Mockito.withSettings().stubOnly());
     private final Logger logger = LoggerFactory.getLogger(SingleClassSpecificationToolsTest.class);
     private final MultiValueMap<String, String> props = new LinkedMultiValueMap<>();
-
-    private final List<String> called = new ArrayList<>();
 
     public SingleClassSpecificationToolsTest() {
         Mockito.when(builder.and()).thenReturn(null);
@@ -44,11 +43,6 @@ public class SingleClassSpecificationToolsTest {
         props.add("notExists4", "value");
         props.add("notExists5", "value");
         props.add("notExists6", "value");
-    }
-
-    @BeforeEach
-    public void beforeEach() {
-        called.clear();
     }
 
     @Test

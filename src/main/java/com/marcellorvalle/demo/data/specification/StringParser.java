@@ -16,7 +16,7 @@ class StringParser {
     private Map<Class<?>, Function<String, ?>> parsers = new HashMap<>();
 
     private StringParser() {
-        parsers.put(Object.class, str -> str);
+        parsers.put(Object.class, obj -> obj);
         parsers.put(String.class, str -> str);
         parsers.put(Long.class, Long::valueOf);
         parsers.put(Integer.class, Integer::valueOf);
@@ -24,6 +24,7 @@ class StringParser {
         parsers.put(Float.class, Float::valueOf);
     }
 
+    @SuppressWarnings("unchecked")
     <T> T parse(String in, Class<T> forClass) {
         if (!parsers.containsKey(forClass)) {
             throw new RuntimeException("Não existe parser para a classe " + forClass.getSimpleName());
