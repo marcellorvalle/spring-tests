@@ -1,16 +1,12 @@
 package com.marcellorvalle.demo.data.specification;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.time.Instant;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Classe utilitária para conversão dos valores dos filtros (String) para os tipos permitidos nos Specificationbuilders
- * concretos.
- *
- * ToDo: Conversão para Date;
+ * Classe utilitária para conversão dos valores dos filtros (String) para outros tipos.
  */
 class StringParser {
     static final StringParser INSTANCE = new StringParser();
@@ -30,6 +26,7 @@ class StringParser {
         parsers.put(float.class, Float::valueOf);
         parsers.put(Character.class, str -> str.charAt(0));
         parsers.put(char.class, str -> str.charAt(0));
+        parsers.put(Date.class, this::fromISO8601UTC);
     }
 
     <T> List<T> parseList(List<String> in, Class<T> forClass) {
@@ -45,5 +42,9 @@ class StringParser {
         }
 
         return (T) parsers.get(forClass).apply(in);
+    }
+
+    private Date fromISO8601UTC(String dateStr) {
+        return Date.from(Instant.parse(dateStr));
     }
 }

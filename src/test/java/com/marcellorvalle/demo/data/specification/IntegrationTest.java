@@ -110,7 +110,7 @@ public class IntegrationTest {
             return byDefault().in("name", names);
         }
 
-       public Predicate filterByNameContains(String name) {
+        public Predicate filterByNameContains(String name) {
             return byDefault().like("name", name);
         }
 

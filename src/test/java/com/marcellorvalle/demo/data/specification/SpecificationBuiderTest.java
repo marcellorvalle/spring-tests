@@ -13,6 +13,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class SpecificationBuiderTest {
@@ -94,6 +95,15 @@ public class SpecificationBuiderTest {
     }
 
     @Test
+    public void testDateValue() {
+        props.add("date", "2019-01-01T00:00:00Z");
+
+        findAll(fooFilter.apply(props));
+
+        Mockito.verify(fooFilter).filterByDate(Mockito.any());
+    }
+
+    @Test
     public void testListValue() {
         props.add("list", "value1");
         props.add("list", "value2");
@@ -164,6 +174,10 @@ public class SpecificationBuiderTest {
         }
 
         public Predicate filterByCharPrimitive(char value) {
+            return null;
+        }
+
+        public Predicate filterByDate(Date date) {
             return null;
         }
 
