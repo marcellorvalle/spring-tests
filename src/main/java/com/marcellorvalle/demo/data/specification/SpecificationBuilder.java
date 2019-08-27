@@ -17,6 +17,8 @@ public abstract class SpecificationBuilder<T> {
     protected Root<T> root;
     protected CriteriaQuery query;
     protected CriteriaBuilder builder;
+
+    private DefaultOperations<T> defaultOperations;
     private MultiValueMap<String, String> filters;
 
     public SpecificationBuilder() {
@@ -25,14 +27,20 @@ public abstract class SpecificationBuilder<T> {
     }
 
     public final Specification<T> apply(MultiValueMap<String, String> filter) {
+        this.filters = filter;
+
         return (root, query, criteriaBuilder) -> {
             this.root = root;
             this.query = query;
             this.builder = criteriaBuilder;
-            this.filters = filter;
+            this.defaultOperations = new DefaultOperations<>(root, builder);
 
             return getPredicate();
         };
+    }
+
+    public DefaultOperations<T> byDefault() {
+        return defaultOperations;
     }
 
     private Predicate getPredicate() {
@@ -45,25 +53,32 @@ public abstract class SpecificationBuilder<T> {
     private void applyFilter(String key, List<String> values) {
         final Optional<Metadata> optMethod = MetadataTool.loadFilterMethod(key, clazz);
 
-        if (optMethod.isPresent()) {
-            try {
-                Metadata metadata = optMethod.get();
-                Method method = metadata.getMethod();
-                Predicate predicate;
+        optMethod.ifPresent(
+                metadata -> predicates.add(getPredicateFromMeta(metadata, values))
+        );
+    }
 
-                if (metadata.parameterIsList()) {
-                    predicate = (Predicate) method.invoke(this, values);
-                } else {
-                    predicate = (Predicate) method.invoke(
-                            this,
-                            StringParser.INSTANCE.parse(values.get(0), metadata.getParameterClass())
-                    );
-                }
+    private Predicate getPredicateFromMeta(Metadata metadata, List<String> values) {
+        return metadata.parameterIsList() ?
+                getPredicateFromListParameterMethod(metadata, values) :
+                getPredicateFromSingleParameterMethod(metadata, values.get(0));
+    }
 
-                predicates.add(predicate);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+    private Predicate getPredicateFromListParameterMethod(Metadata metadata, List<String> values) {
+        return invoke(metadata.getMethod(),
+                StringParser.INSTANCE.parseList(values, metadata.getParameterClass()));
+    }
+
+    private Predicate getPredicateFromSingleParameterMethod(Metadata metadata, String value) {
+        return invoke(metadata.getMethod(),
+                StringParser.INSTANCE.parse(value, metadata.getParameterClass()));
+    }
+
+    private Predicate invoke(Method method, Object... args) {
+        try {
+            return (Predicate) method.invoke(this, args);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 }
