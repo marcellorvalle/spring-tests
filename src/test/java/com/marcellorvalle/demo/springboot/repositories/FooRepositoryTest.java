@@ -1,14 +1,10 @@
-package com.marcellorvalle.demo.repositories;
+package com.marcellorvalle.demo.springboot.repositories;
 
-import com.marcellorvalle.demo.entities.Bar;
-import com.marcellorvalle.demo.entities.Foo;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.io.Console;
 
 @DataJpaTest
 @RunWith(SpringRunner.class)

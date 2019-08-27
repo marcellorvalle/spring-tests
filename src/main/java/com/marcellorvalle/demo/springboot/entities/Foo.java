@@ -1,4 +1,4 @@
-package com.marcellorvalle.demo.entities;
+package com.marcellorvalle.demo.springboot.entities;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;

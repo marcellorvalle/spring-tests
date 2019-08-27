@@ -1,6 +1,6 @@
-package com.marcellorvalle.demo.repositories;
+package com.marcellorvalle.demo.springboot.repositories;
 
-import com.marcellorvalle.demo.entities.Person;
+import com.marcellorvalle.demo.springboot.entities.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
