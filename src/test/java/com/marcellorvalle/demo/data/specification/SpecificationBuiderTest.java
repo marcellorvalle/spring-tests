@@ -1,6 +1,6 @@
 package com.marcellorvalle.demo.data.specification;
 
-import com.marcellorvalle.demo.entities.Foo;
+import com.marcellorvalle.demo.springboot.entities.Foo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;

@@ -1,7 +1,7 @@
 package com.marcellorvalle.demo.data.specification;
 
 import com.marcellorvalle.demo.SpecificationTools.SpecExecLambdaMapping;
-import com.marcellorvalle.demo.entities.Foo;
+import com.marcellorvalle.demo.springboot.entities.Foo;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.slf4j.Logger;

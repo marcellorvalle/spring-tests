@@ -1,7 +1,7 @@
 package com.marcellorvalle.demo.data.specification;
 
-import com.marcellorvalle.demo.entities.Person;
-import com.marcellorvalle.demo.repositories.PersonRepository;
+import com.marcellorvalle.demo.springboot.entities.Person;
+import com.marcellorvalle.demo.springboot.repositories.PersonRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

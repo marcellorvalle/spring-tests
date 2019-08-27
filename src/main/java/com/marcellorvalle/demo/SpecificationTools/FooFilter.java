@@ -1,7 +1,7 @@
 package com.marcellorvalle.demo.SpecificationTools;
 
 import com.marcellorvalle.demo.data.specification.SpecificationBuilder;
-import com.marcellorvalle.demo.entities.Foo;
+import com.marcellorvalle.demo.springboot.entities.Foo;
 
 import javax.persistence.criteria.Predicate;
 import java.util.List;
