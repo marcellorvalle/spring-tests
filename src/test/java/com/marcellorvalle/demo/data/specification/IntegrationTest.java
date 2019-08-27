@@ -1,5 +1,6 @@
 package com.marcellorvalle.demo.data.specification;
 
+import com.marcellorvalle.demo.currency.Money;
 import com.marcellorvalle.demo.springboot.entities.Person;
 import com.marcellorvalle.demo.springboot.repositories.PersonRepository;
 import org.junit.jupiter.api.Assertions;
@@ -25,6 +26,8 @@ public class IntegrationTest {
     public IntegrationTest(PersonRepository personRepository) {
         this.personRepository = personRepository;
         filter = new PersonFilter();
+        SpecificationBuilder.parameterParser().add(Money.class, Money::from);
+
         populateDb();
     }
 

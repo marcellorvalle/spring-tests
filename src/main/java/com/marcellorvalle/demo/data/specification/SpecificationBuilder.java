@@ -26,6 +26,13 @@ public abstract class SpecificationBuilder<T> {
         clazz = this.getClass();
     }
 
+    /**
+     * Permite a adição de parsers customizados
+     */
+    public static StringParser parameterParser() {
+        return StringParser.INSTANCE;
+    }
+
     public final Specification<T> apply(MultiValueMap<String, String> filter) {
         this.filters = filter;
 

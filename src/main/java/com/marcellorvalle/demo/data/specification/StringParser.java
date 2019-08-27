@@ -8,25 +8,33 @@ import java.util.stream.Collectors;
 /**
  * Classe utilitária para conversão dos valores dos filtros (String) para outros tipos.
  */
-class StringParser {
+public class StringParser {
     static final StringParser INSTANCE = new StringParser();
 
-    private Map<Class<?>, Function<String, ?>> parsers = new HashMap<>();
+    private final Map<Class<?>, Function<String, ?>> parsers = new HashMap<>();
 
     private StringParser() {
-        parsers.put(Object.class, obj -> obj);
-        parsers.put(String.class, str -> str);
-        parsers.put(Long.class, Long::valueOf);
-        parsers.put(long.class, Long::valueOf);
-        parsers.put(Integer.class, Integer::valueOf);
-        parsers.put(int.class, Integer::valueOf);
-        parsers.put(Double.class, Double::valueOf);
-        parsers.put(double.class, Double::valueOf);
-        parsers.put(Float.class, Float::valueOf);
-        parsers.put(float.class, Float::valueOf);
-        parsers.put(Character.class, str -> str.charAt(0));
-        parsers.put(char.class, str -> str.charAt(0));
-        parsers.put(Date.class, this::fromISO8601UTC);
+        add(Object.class, obj -> obj);
+        add(String.class, str -> str);
+        add(Long.class, Long::valueOf);
+        add(long.class, Long::valueOf);
+        add(Integer.class, Integer::valueOf);
+        add(int.class, Integer::valueOf);
+        add(Double.class, Double::valueOf);
+        add(double.class, Double::valueOf);
+        add(Float.class, Float::valueOf);
+        add(float.class, Float::valueOf);
+        add(Character.class, str -> str.charAt(0));
+        add(char.class, str -> str.charAt(0));
+        add(Date.class, this::fromISO8601UTC);
+    }
+
+    /**
+     * Permite a adição de parsers customizados, que serão usados na hora de converter o parâmetro recebido via url
+     * para o tipo do parâmetro usado na função do filtro.
+     */
+    public <T> void add(Class<T> clazz, Function<String, T> parser) {
+        parsers.put(clazz, parser);
     }
 
     <T> List<T> parseList(List<String> in, Class<T> forClass) {
