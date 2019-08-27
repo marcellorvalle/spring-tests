@@ -3,6 +3,7 @@ package com.marcellorvalle.demo.currency;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Money {
     public static final Money ZERO = Money.from(0.0);
@@ -25,6 +26,10 @@ public class Money {
     }
 
     public static Money from(String value) {
+        if (Objects.isNull(value) || "".equals(value)) {
+            return Money.ZERO;
+        }
+
         return new Money(new BigDecimal(value));
     }
 
