@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class MoneyTest {
+    private final Money zero = Money.ZERO;
+    private final Money one = Money.from(1);
+    private final Money positive = one;
+    private final Money negative = positive.invert();
 
     @Test
     public void testSum() {
@@ -129,6 +133,64 @@ public class MoneyTest {
         Assertions.assertEquals(
                 Money.from(1), Money.from(100).divide(100.1)
         );
+    }
+
+    @Test
+    public void testCompare() {
+        Assertions.assertTrue(zero.isZero());
+
+        Assertions.assertTrue(one.gt(zero));
+        Assertions.assertTrue(one.ge(zero));
+
+        Assertions.assertTrue(zero.lt(one));
+        Assertions.assertTrue(zero.le(one));
+
+        Assertions.assertTrue(one.eq(Money.from(1.00)));
+        Assertions.assertTrue(one.le(Money.from(1.00)));
+        Assertions.assertTrue(one.ge(Money.from(1.00)));
+    }
+
+    @Test
+    public void testSignal() {
+        Assertions.assertTrue(positive.isPositive());
+        Assertions.assertFalse(positive.isNegative());
+
+        Assertions.assertTrue(negative.isNegative());
+        Assertions.assertFalse(negative.isPositive());
+
+        Assertions.assertTrue(positive.invert().isNegative());
+        Assertions.assertTrue(negative.invert().isPositive());
+    }
+
+    @Test
+    public void testSignalInvertion() {
+        Assertions.assertTrue(positive.invert().isNegative());
+        Assertions.assertTrue(negative.invert().isPositive());
+    }
+
+    @Test
+    public void testAbs() {
+        Assertions.assertTrue(positive.abs().isPositive());
+        Assertions.assertTrue(negative.abs().isPositive());
+    }
+
+    @Test
+    public void testPercentile() {
+        final Money ten = Money.from(10);
+
+        Assertions.assertEquals(Money.from(5), ten.percentile(50));
+        Assertions.assertEquals(Money.from(0.5), ten.percentile(5));
+        Assertions.assertEquals(ten, ten.percentile(100));
+        Assertions.assertEquals(ten.multiply(2), ten.percentile(200));
+        Assertions.assertEquals(zero, ten.percentile(0));
+    }
+
+    @Test
+    public void testCents() {
+        Assertions.assertEquals(0, zero.cents());
+        Assertions.assertEquals(100, one.cents());
+        Assertions.assertEquals(-100, negative.cents());
+        Assertions.assertEquals(12255, Money.from(122.55).cents());
     }
 
 }

@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 import java.util.Arrays;
 
 public class Money {
-    private static final Money ZERO = Money.from(0.0);
+    public static final Money ZERO = Money.from(0.0);
 
     private static final int PRECISION = 2;
     private static final RoundingMode ROUNDING = RoundingMode.HALF_EVEN;
@@ -22,6 +22,14 @@ public class Money {
 
     public static Money from(double value) {
         return new Money(BigDecimal.valueOf(value));
+    }
+
+    public static Money from(String value) {
+        return new Money(new BigDecimal(value));
+    }
+
+    public static Money addAll(Money... money) {
+        return ZERO.add(money);
     }
 
     public Money add(Float... values) {
@@ -70,12 +78,6 @@ public class Money {
         return multiply(percentage).divide(100);
     }
 
-    public double fraction(Money other) {
-        return other
-                .divide(toDouble())
-                .toDouble();
-    }
-
     public Money multiply(float value) {
         return new Money(amount.multiply(BigDecimal.valueOf(value)));
     }
@@ -92,6 +94,14 @@ public class Money {
         return new Money(amount.divide(BigDecimal.valueOf(value), PRECISION, ROUNDING));
     }
 
+    public Money abs() {
+        return isNegative() ? invert() : this;
+    }
+
+    public Money invert() {
+        return multiply(-1);
+    }
+
     public boolean isPositive() {
         return gt(ZERO);
     }
@@ -101,7 +111,7 @@ public class Money {
     }
 
     public boolean isZero() {
-        return equals(ZERO);
+        return eq(ZERO);
     }
 
     public boolean gt(Money other) {
@@ -126,15 +136,19 @@ public class Money {
             return false;
         }
 
-        return equals((Money) other);
+        return eq((Money) other);
     }
 
-    public boolean equals(Money other) {
+    public boolean eq(Money other) {
         return compareTo(other) == 0;
     }
 
     public int compareTo(Money other) {
         return getAmountWithPrecision().compareTo(other.getAmountWithPrecision());
+    }
+
+    public long cents() {
+        return (long) multiply(100).toDouble();
     }
 
     @Override
