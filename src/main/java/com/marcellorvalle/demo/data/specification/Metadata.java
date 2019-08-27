@@ -1,6 +1,7 @@
 package com.marcellorvalle.demo.data.specification;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 /**
@@ -12,11 +13,13 @@ import java.util.List;
 class Metadata {
     final private Method method;
     final private Class<?> parameterClass;
+    final private Class<?> parameterBaseClass;
 
     Metadata(Method method) {
         this.method = method;
         //Por definição, os métodos filterBy tem apenas um parâmetro
         parameterClass = method.getParameterTypes()[0];
+        parameterBaseClass = parameterIsList() ? getGenericListType() : parameterClass;
     }
 
     Method getMethod() {
@@ -24,10 +27,16 @@ class Metadata {
     }
 
     Class<?> getParameterClass() {
-        return parameterClass;
+        return parameterBaseClass;
     }
 
     boolean parameterIsList() {
         return parameterClass == List.class;
+    }
+
+    private Class<?> getGenericListType() {
+        ParameterizedType type = (ParameterizedType) method.getGenericParameterTypes()[0];
+
+        return (Class<?>)type.getActualTypeArguments()[0];
     }
 }
