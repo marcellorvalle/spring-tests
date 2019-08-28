@@ -9,6 +9,7 @@ public class Money {
     public static final Money ZERO = Money.from(0.0);
 
     private static final int PRECISION = 2;
+    private static final int EXTENDED_PRECISION = 4;
     private static final RoundingMode ROUNDING = RoundingMode.HALF_EVEN;
 
     private final BigDecimal amount;
@@ -92,11 +93,11 @@ public class Money {
     }
 
     public Money divide(float value) {
-        return new Money(amount.divide(BigDecimal.valueOf(value), PRECISION, ROUNDING));
+        return new Money(amount.divide(BigDecimal.valueOf(value), EXTENDED_PRECISION, ROUNDING));
     }
 
     public Money divide(double value) {
-        return new Money(amount.divide(BigDecimal.valueOf(value), PRECISION, ROUNDING));
+        return new Money(amount.divide(BigDecimal.valueOf(value), EXTENDED_PRECISION, ROUNDING));
     }
 
     public Money abs() {

@@ -136,6 +136,13 @@ public class MoneyTest {
     }
 
     @Test
+    public void testPrecision() {
+        Money cents = one.divide(3);
+
+        Assertions.assertEquals(one, cents.multiply(3));
+    }
+
+    @Test
     public void testCompare() {
         Assertions.assertTrue(zero.isZero());
 
