@@ -3,6 +3,9 @@ package com.marcellorvalle.demo.currency;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MoneyTest {
     private final Money zero = Money.ZERO;
     private final Money one = Money.from(1);
@@ -137,9 +140,11 @@ public class MoneyTest {
 
     @Test
     public void testPrecision() {
-        Money cents = one.divide(3);
+        final Money hundred = Money.from(100);
 
-        Assertions.assertEquals(one, cents.multiply(3));
+        somePrimeNumbers().stream().forEach(
+                div -> Assertions.assertEquals(hundred, hundred.divide(div).multiply(div), div.toString())
+        );
     }
 
     @Test
@@ -198,6 +203,10 @@ public class MoneyTest {
         Assertions.assertEquals(100, one.cents());
         Assertions.assertEquals(-100, negative.cents());
         Assertions.assertEquals(12255, Money.from(122.55).cents());
+    }
+
+    private List<Integer> somePrimeNumbers() {
+        return Arrays.asList(3, 7, 11, 13, 17, 19, 47, 103, 181, 463, 727, 1129, 3617, 5021, 7927, 8581, 9973);
     }
 
 }
