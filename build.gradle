@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 plugins {
     id 'org.springframework.boot' version '2.1.6.RELEASE'
     id 'java'
@@ -29,12 +31,25 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.8'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
-    
+
     runtimeOnly 'com.h2database:h2'
     testImplementation('org.junit.jupiter:junit-jupiter:5.4.2')
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
+// Profiling para flamegraph
+// gradlew.bat :cleanTest :test --tests "com.marcellorvalle.demo.data.specification.BenchmarkTests.benchmarkAll"
+//    jvmArgs += ["-XX:+UnlockCommercialFeatures",
+//                "-XX:+FlightRecorder",
+//                "-XX:StartFlightRecording=duration=30s,filename=${project.buildDir}/profiling_${timestamp()}.jfr",
+//                "-XX:FlightRecorderOptions=stackdepth=256"]
+
     useJUnitPlatform()
+}
+
+def timestamp() {
+    Date today = new Date()
+    SimpleDateFormat df = new SimpleDateFormat("hhmmss")
+    return df.format(today)
 }
