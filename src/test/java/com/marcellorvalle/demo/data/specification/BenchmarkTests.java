@@ -54,7 +54,7 @@ public class BenchmarkTests {
     }
 
     private void runTests(Specification<Foo> spec, String testName) {
-        final int executions = 1000;
+        final int executions = 100;
         final List<Long> values = new ArrayList<>();
 
         for (int j = 0; j < executions; j++) {

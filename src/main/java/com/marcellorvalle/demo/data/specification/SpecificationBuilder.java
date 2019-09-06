@@ -58,11 +58,11 @@ public abstract class SpecificationBuilder<T> {
     }
 
     private void applyFilter(String key, List<String> values) {
-        final Optional<Metadata> optMethod = MetadataTool.loadFilterMethod(key, clazz);
+        final Metadata metadata = MetadataTool.loadFilterMethod(key, clazz);
 
-        optMethod.ifPresent(
-                metadata -> predicates.add(getPredicateFromMeta(metadata, values))
-        );
+        if (metadata.isValidFilter()) {
+            predicates.add(getPredicateFromMeta(metadata, values));
+        }
     }
 
     private Predicate getPredicateFromMeta(Metadata metadata, List<String> values) {

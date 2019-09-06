@@ -1,11 +1,12 @@
 package com.marcellorvalle.demo.data.specification;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Classe que representa uma chave capaz de identificar a combinação filtro/builder e pode ser usada em um Map.
  */
-class MetadataKey {
+class MetadataKey implements Serializable {
     private final String filterName;
     private final Class<? extends SpecificationBuilder> forClass;
 

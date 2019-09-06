@@ -123,6 +123,14 @@ public class SpecificationBuiderTest {
         Mockito.verify(fooFilter).filterByListLong(Arrays.asList(0L, 1L));
     }
 
+    @Test
+    public void testNotExistingMethod() {
+        props.add("notExisting", "");
+
+        findAll(fooFilter.apply(props));
+        Mockito.verifyZeroInteractions(fooFilter);
+    }
+
     @AfterEach
     public void tearDown() {
         props.clear();
