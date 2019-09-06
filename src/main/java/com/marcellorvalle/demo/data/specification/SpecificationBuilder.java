@@ -46,8 +46,18 @@ public abstract class SpecificationBuilder<T> {
         };
     }
 
+    /**
+     * Método de acesso às operações padrão (equals, like, in, etc)
+     */
     public DefaultOperations<T> byDefault() {
         return defaultOperations;
+    }
+
+    /**
+     * Método de acesso ao cache de metadados
+     */
+    public MetadataCache cache() {
+        return MetadataCache.INSTANCE;
     }
 
     private Predicate getPredicate() {
