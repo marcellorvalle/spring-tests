@@ -14,6 +14,13 @@ public class Bar {
     private Qux qux;
     private String name;
 
+    public Bar() {
+    }
+
+    public Bar(Long id) {
+        idBar = id;
+    }
+
     public Long getIdBar() {
         return idBar;
     }

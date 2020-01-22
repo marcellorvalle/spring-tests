@@ -1,0 +1,14 @@
+[
+  {
+    "_class": "com.marcellorvalle.demo.springboot.entities.Bar",
+    "idBar": 1,
+    "name": "Some Bar"
+  },
+  {
+    "_class": "com.marcellorvalle.demo.springboot.entities.Foo",
+    "idFoo": 1,
+    "name": "Some Foo",
+    "bar": 1
+  }
+
+]
